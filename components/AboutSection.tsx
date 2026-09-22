@@ -8,6 +8,7 @@ export function AboutSection() {
   const { reducedMotion } = useMotion();
   const { ref, visible } = useReveal<HTMLElement>(reducedMotion);
   const reveal = revealStyles(visible, reducedMotion);
+  const [first, ...remaining] = about.paragraphs;
 
   return (
     <section id="about" ref={ref} className="section bg-band" style={{ overflow: 'hidden' }}>
@@ -18,15 +19,18 @@ export function AboutSection() {
         <div style={reveal.heading}>
           <h2 className="section-heading">{about.heading}</h2>
         </div>
+        {/* First paragraph leads; the remainder follows on the later reveal. */}
         <div style={reveal.body}>
           <p className="prose" style={{ marginTop: 28 }}>
-            {about.body}
+            {first}
           </p>
         </div>
         <div style={reveal.rest}>
-          <p className="prose" style={{ marginTop: 20 }}>
-            {about.rest}
-          </p>
+          {remaining.map((paragraph) => (
+            <p key={paragraph} className="prose" style={{ marginTop: 20 }}>
+              {paragraph}
+            </p>
+          ))}
         </div>
       </div>
     </section>

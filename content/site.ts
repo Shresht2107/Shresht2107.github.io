@@ -63,8 +63,11 @@ export const hero = {
 export const about = {
   heading: 'About',
   watermark: '>_',
-  body: "I'm a second-year Computer Science student at Nirma University who spends more time shipping systems than writing essays about them. I build RAG pipelines, multi-agent orchestration, and full-stack applications that hold up outside a notebook.",
-  rest: "My focus is moving from prototypes to production — pipelines that handle real ingestion, real latency, and real failure modes. I'm working toward systems reliable enough to run in production, not just demo well.",
+  paragraphs: [
+    'I work mostly on applied AI: retrieval pipelines, agent workflows, and the engineering that makes them dependable in real use. A lot of that comes down to knowing when a model should make the call and when it shouldn\'t. During my internship at Amnex, I built the agent behind AIRA, an HR assistant that hands a question to a human whenever it isn\'t confident enough to answer. On ArogyaLink, a rural health-data platform, AI turns voice notes and photos of health records into structured data, but medical decisions are made by fixed rules, not the AI.',
+    'I\'m in my second year of B.Tech in Computer Science, and I\'m currently researching failure modes in agentic federated learning with collaborators at Nirma University and the University of Messina. I also enjoy working below the usual abstractions, which led me to build a RISC-V assembler and a C syntax checker from scratch.',
+    'I\'m looking for internships and research roles where I can keep building AI systems that are both capable and reliable.',
+  ],
 } as const;
 
 /* ------------------------------------------------------------ internship */
