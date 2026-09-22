@@ -7,3 +7,6 @@ next-env.d.ts
 .env*.local
 design-export/
 *.zip
+
+# Loose source drop of the resume; the served copy is public/Shresht_Ashish_Resume.pdf
+/Shresht_Ashish-3.pdf
