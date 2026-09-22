@@ -1,0 +1,526 @@
+@import 'tailwindcss';
+
+/**
+ * Palette, typography scale and keyframes.
+ *
+ * Every colour in the design lives here as a token and nowhere else. The OKLCH
+ * values are carried over from the Claude Design export unchanged. Tokens are
+ * declared in @theme so Tailwind generates matching utilities (bg-paper,
+ * text-ink, ...) from the same definition that raw var() references read.
+ */
+
+@theme {
+  /* surfaces */
+  --color-paper: oklch(97.5% 0.012 75);
+  --color-band: oklch(94.5% 0.018 78);
+  --color-panel: oklch(96.5% 0.014 78);
+
+  /* type */
+  --color-ink: oklch(19% 0.014 75);
+  --color-body: oklch(30% 0.013 75);
+  --color-diagram: oklch(38% 0.013 75);
+  --color-meta: oklch(40% 0.013 75);
+  --color-muted: oklch(46% 0.013 75);
+  --color-annotation: oklch(52% 0.012 75);
+  --color-faint: oklch(55% 0.012 75);
+  --color-footer: oklch(55% 0.013 75);
+  --color-hint: oklch(58% 0.012 75);
+  --color-cue: oklch(60% 0.013 75);
+
+  /* rules and edges */
+  --color-rule: oklch(85% 0.012 75);
+  --color-rule-soft: oklch(88% 0.012 75);
+  --color-rule-strong: oklch(82% 0.012 75);
+  --color-rule-hero: oklch(80% 0.012 75);
+  --color-rule-panel: oklch(80% 0.014 78);
+  --color-watermark: oklch(88% 0.014 78);
+
+  /* accents */
+  --color-accent: oklch(62% 0.15 230);
+  --color-coral: oklch(62% 0.15 20);
+
+  /* fonts, wired to next/font in layout.tsx */
+  --font-sans: var(--font-inter), sans-serif;
+  --font-serif: var(--font-newsreader), serif;
+  --font-mono: var(--font-courier-prime), monospace;
+}
+
+/**
+ * Canvas cannot read an OKLCH token through getComputedStyle in a form the 2D
+ * context accepts on every engine, so the node field reads these channel
+ * triples instead. They are the sRGB form of --color-ink / --color-accent /
+ * --color-coral and must be kept in step with them.
+ */
+:root {
+  --field-ink-rgb: 43 39 34;
+  --field-accent-rgb: 41 118 196;
+  --field-coral-rgb: 203 90 68;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+  font-family: var(--font-sans);
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------------------------------------------------------------- layout */
+
+.page {
+  position: relative;
+  overflow-x: hidden;
+}
+
+.section {
+  position: relative;
+  padding: 140px clamp(56px, 9vw, 100px);
+}
+
+.section-inner {
+  position: relative;
+  z-index: 2;
+}
+
+.section-heading {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(30px, 4vw, 46px);
+  margin: 0;
+}
+
+.prose {
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--color-body);
+  max-width: 640px;
+}
+
+/* ------------------------------------------------------------------- nav */
+
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px clamp(24px, 6vw, 64px);
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+}
+
+.nav[data-solid='true'] {
+  background: color-mix(in oklch, var(--color-paper) 85%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom-color: var(--color-rule);
+}
+
+.nav-mark {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 24px;
+  color: var(--color-ink);
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(14px, 3vw, 30px);
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 15px;
+  transition: opacity 0.4s ease;
+}
+
+.nav-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.25s ease-out;
+}
+
+/* ---------------------------------------------------------- resume links */
+
+.resume-nav,
+.resume-hero,
+.resume-lead {
+  font-family: var(--font-mono);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.resume-nav {
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  color: var(--color-body);
+  white-space: nowrap;
+  border: 1px solid var(--color-rule-strong);
+  border-radius: 3px;
+  padding: 6px 11px;
+  transition:
+    opacity 0.4s ease 0.15s,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease-out;
+}
+
+.resume-hero {
+  font-size: 14px;
+  color: var(--color-meta);
+  border-bottom: 1px solid var(--color-rule-hero);
+  padding-bottom: 3px;
+  margin-top: 30px;
+}
+
+.resume-lead {
+  font-size: clamp(20px, 2.6vw, 27px);
+  color: var(--color-ink);
+  border-bottom: 1.5px solid var(--color-accent);
+  padding-bottom: 5px;
+  margin-top: 52px;
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease-out;
+}
+
+.resume-nav:hover,
+.resume-hero:hover,
+.resume-lead:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.contact-link {
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 18px;
+  display: inline-block;
+  cursor: pointer;
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease-out;
+}
+
+.contact-link:hover {
+  border-bottom-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* ------------------------------------------------------------------ hero */
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px clamp(24px, 6vw, 64px) 90px;
+  position: relative;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(28px, 5.4vw, 62px);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin: 0;
+  max-width: 900px;
+  color: var(--color-ink);
+}
+
+.hero-caret {
+  display: inline-block;
+  width: 2px;
+  height: 0.95em;
+  background: currentColor;
+  margin-left: 5px;
+  vertical-align: -0.05em;
+  animation: blinkCaret 1s steps(1) infinite;
+}
+
+.hero-subline {
+  font-family: var(--font-sans);
+  font-size: clamp(15px, 1.8vw, 19px);
+  color: var(--color-muted);
+  max-width: 560px;
+  margin-top: 26px;
+  transition:
+    opacity 0.8s ease 0.1s,
+    transform 0.8s ease 0.1s;
+}
+
+.hero-cue {
+  position: absolute;
+  bottom: 44px;
+  left: clamp(24px, 6vw, 64px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-footer);
+  transition:
+    opacity 0.8s ease 0.1s,
+    transform 0.8s ease 0.1s;
+}
+
+.hero-cue-line {
+  width: 1px;
+  height: 22px;
+  background: var(--color-cue);
+  animation: bounceDown 1.6s ease-in-out infinite;
+}
+
+/* -------------------------------------------------------------- sections */
+
+.watermark {
+  position: absolute;
+  right: 4%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(110px, 18vw, 200px);
+  color: var(--color-watermark);
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+}
+
+.entry {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 26px;
+  max-width: 660px;
+}
+
+.entry-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.entry-body {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--color-muted);
+  margin-top: 10px;
+}
+
+.project-title {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.project-body {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--color-body);
+  margin-top: 14px;
+  max-width: 480px;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 48px;
+  align-items: center;
+}
+
+.tag {
+  border: 1px solid var(--color-accent);
+  border-radius: 3px;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+
+.tag[data-accent='coral'] {
+  border-color: var(--color-coral);
+}
+
+.diagram-frame {
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--color-rule-panel);
+  background: var(--color-panel);
+  padding: 12px;
+}
+
+.mono-note {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-meta);
+}
+
+.mono-action {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+.now-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-coral);
+  animation: pulseDot 2.2s infinite;
+  flex-shrink: 0;
+}
+
+/* ----------------------------------------------------------------- stack */
+
+.stack-chip {
+  border: 1px solid var(--color-accent);
+  border-radius: 3px;
+  padding: 7px 12px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.stack-chip[data-weight='prod'] {
+  border-width: 1.5px;
+}
+
+.stack-chip[data-accent='coral'] {
+  border-color: var(--color-coral);
+}
+
+/**
+ * The constellation is the primary view; below the nav breakpoint it gives way
+ * to the grouped list, which carries the same data and the same interactions.
+ */
+.constellation {
+  display: block;
+}
+
+.stack-list {
+  display: none;
+}
+
+@media (max-width: 880px) {
+  .constellation {
+    display: none;
+  }
+
+  .stack-list {
+    display: block;
+  }
+}
+
+/* ------------------------------------------------------------ animations */
+
+@keyframes blinkCaret {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  95% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes diagPulse {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -400;
+  }
+}
+
+@keyframes bounceDown {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes pulseDot {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklch, var(--color-coral) 45%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 9px color-mix(in oklch, var(--color-coral) 0%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklch, var(--color-coral) 0%, transparent);
+  }
+}
+
+/**
+ * Reduced motion: the intro is skipped and every looping decoration is held in
+ * its finished state. Scroll reveals and diagram builds are handled in JS,
+ * which collapses their durations rather than removing the end state.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .hero-caret,
+  .hero-cue-line,
+  .now-dot {
+    animation: none;
+  }
+
+  .diagram-pulse {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+
+  .nav-link,
+  .contact-link,
+  .resume-nav,
+  .resume-hero,
+  .resume-lead {
+    transform: none !important;
+  }
+}
