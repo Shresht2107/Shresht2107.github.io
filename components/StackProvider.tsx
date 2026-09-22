@@ -12,7 +12,7 @@ import {
 import { stackEdges, stackProjects, stackTools } from '@/content/site';
 import { stack as stackMotion } from '@/config/motion';
 import { useMotion } from '@/components/MotionProvider';
-import { scrollToSection } from '@/lib/motion';
+import { scrollToSection } from '@/lib/scroll';
 
 /** Per-tool opacities, per-edge opacities and the focus ring position. */
 export type StackVisuals = {

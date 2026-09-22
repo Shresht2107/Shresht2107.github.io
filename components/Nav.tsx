@@ -5,7 +5,7 @@ import { links, navItems, resumeLabel, site, type SectionKey } from '@/content/s
 import { magnet, nav as navConfig } from '@/config/motion';
 import { useMotion } from '@/components/MotionProvider';
 import { useMagnet } from '@/components/Magnetic';
-import { scrollToSection, scrollToTop } from '@/lib/motion';
+import { scrollToSection, scrollToTop } from '@/lib/scroll';
 
 function NavLink({ label, sectionKey }: { label: string; sectionKey: SectionKey }) {
   const { reducedMotion } = useMotion();

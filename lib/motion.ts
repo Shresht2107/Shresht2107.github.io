@@ -93,17 +93,3 @@ export function revealStyles(visible: boolean, reducedMotion: boolean): RevealSt
     rest: build(reveal.parts.rest),
   };
 }
-
-/** Sections sit below the fixed nav when scrolled to. */
-export function scrollToSection(id: string, reducedMotion: boolean): void {
-  const el = document.getElementById(id);
-  if (!el) return;
-  window.scrollTo({
-    top: el.getBoundingClientRect().top + window.scrollY - nav.scrollOffsetPx,
-    behavior: reducedMotion ? 'auto' : 'smooth',
-  });
-}
-
-export function scrollToTop(reducedMotion: boolean): void {
-  window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
-}

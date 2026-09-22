@@ -135,11 +135,25 @@ export const trace = {
   viewportAnchor: 0.5,
 } as const;
 
+/**
+ * Animated nav scrolling. Native smooth scrolling is not used: it lands too
+ * fast and cannot be interrupted.
+ */
+export const scroll = {
+  /** Duration for a short hop. */
+  minDurationMs: 700,
+  /** Duration for a jump across the whole page. Never exceeded. */
+  maxDurationMs: 1200,
+  /** How far the page may drift from where we put it before we assume the
+   *  visitor has taken over and cancel. */
+  takeoverTolerancePx: 3,
+} as const;
+
 /** Nav + scrolling. */
 export const nav = {
   /** Scroll depth at which the nav gains its blurred backdrop. */
   solidAfterPx: 80,
-  /** Sections scroll to sit this far below the fixed nav. */
+  /** Fallback offset if the nav cannot be measured; normally its real height is used. */
   scrollOffsetPx: 90,
   /** Below this width the trace rail and constellation give way to the list. */
   mobileBreakpointPx: 880,

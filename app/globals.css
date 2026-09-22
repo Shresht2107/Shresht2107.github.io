@@ -57,9 +57,11 @@
   --field-coral-rgb: 203 90 68;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/*
+ * No scroll-behavior here on purpose: nav jumps are animated in JS
+ * (lib/scroll.ts) so they can be paced and interrupted. Declaring smooth
+ * scrolling as well would make the two fight.
+ */
 
 body {
   margin: 0;
@@ -74,12 +76,6 @@ body {
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
 }
 
 /* ---------------------------------------------------------------- layout */
