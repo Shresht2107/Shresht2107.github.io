@@ -49,7 +49,7 @@ function ResumeLink() {
 }
 
 export function Nav() {
-  const { reducedMotion, introDone } = useMotion();
+  const { reducedMotion, introLanded, introDone } = useMotion();
   const [solid, setSolid] = useState(false);
 
   useEffect(() => {
@@ -73,12 +73,20 @@ export function Nav() {
 
   return (
     <nav className="nav" data-solid={solid}>
-      {/* The intro's flying S measures against this mark and parks on it. */}
+      {/*
+        The intro's flying S measures against this mark, so it has to keep its
+        layout box — hence opacity rather than display. It starts hidden in the
+        server-rendered HTML too, otherwise it flashes before hydration and
+        briefly shows a second S next to the one being drawn.
+      */}
       <button
         type="button"
         id="nav-mark"
         className="nav-mark"
         aria-label={`${site.name} — back to top`}
+        aria-hidden={!introLanded}
+        tabIndex={introLanded ? undefined : -1}
+        style={{ opacity: introLanded ? 1 : 0 }}
         onClick={() => scrollToTop(reducedMotion)}
       >
         {site.shortMark}

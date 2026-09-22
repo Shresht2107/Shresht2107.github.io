@@ -25,7 +25,7 @@ const GLYPH_TRANSFORM = 'translate(47.4, 170)';
 type Stage = 'hidden' | 'revealed' | 'filled' | 'fly';
 
 export function Intro() {
-  const { reducedMotion, ready, introDone, markIntroDone } = useMotion();
+  const { reducedMotion, ready, introLanded, markIntroLanded, markIntroDone } = useMotion();
   const [stage, setStage] = useState<Stage>('hidden');
   const [flyTransform, setFlyTransform] = useState('translate(-50%, -50%)');
   const markRef = useRef<HTMLDivElement>(null);
@@ -64,6 +64,9 @@ export function Intro() {
     const timers = [
       window.setTimeout(() => setStage('filled'), intro.filledAtMs),
       window.setTimeout(startFly, intro.flyAtMs),
+      // Landing and the nav S appearing are the same state update, so the
+      // handover happens in one frame with no flicker or gap.
+      window.setTimeout(markIntroLanded, intro.landedAtMs),
       window.setTimeout(markIntroDone, intro.doneAtMs),
     ];
 
@@ -72,11 +75,12 @@ export function Intro() {
       for (const id of timers) clearTimeout(id);
       if (flyRetry !== null) cancelAnimationFrame(flyRetry);
     };
-  }, [ready, reducedMotion, markIntroDone]);
+  }, [ready, reducedMotion, markIntroLanded, markIntroDone]);
 
   // Held back until the media query is known, so a reduced-motion visitor never
-  // sees a frame of it.
-  if (!ready || reducedMotion || !motionProps.showIntro || introDone) return null;
+  // sees a frame of it. Removed the moment the S lands on the nav mark, which
+  // is when the nav's own S is revealed.
+  if (!ready || reducedMotion || !motionProps.showIntro || introLanded) return null;
 
   const idle = stage === 'hidden';
 

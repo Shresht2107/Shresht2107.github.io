@@ -50,6 +50,13 @@ export const intro = {
   /** Dash length covering the full glyph path. */
   dashLength: 1000,
   flyDurationSec: 1.8,
+  /**
+   * When the flying S reaches the nav mark. The nav's own S is revealed and
+   * the intro S is removed on this frame, so only one is ever visible.
+   */
+  get landedAtMs(): number {
+    return this.flyAtMs + this.flyDurationSec * 1000;
+  },
   flyEasing: 'cubic-bezier(0.16, 1, 0.3, 1)',
   overlayFadeSec: 1.3,
   dotFadeSec: 0.25,
