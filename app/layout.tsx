@@ -30,6 +30,24 @@ const inter = Inter({
   display: 'swap',
 });
 
+/**
+ * Runs before anything paints, so the page never visibly jumps.
+ *
+ * Browsers restore the previous scroll position on reload, which would drop a
+ * returning visitor into the middle of the page with the intro already playing
+ * above them. Turning restoration off has to happen before the browser acts on
+ * it, which is why this is an inline head script and not an effect.
+ *
+ * Nav clicks never write a hash, but one can still arrive from an external
+ * link or an old bookmark; it is cleared so the intro plays from the top.
+ */
+const SCROLL_RESET = `(function(){try{
+if('scrollRestoration' in history){history.scrollRestoration='manual';}
+if(location.hash){history.replaceState(null,'',location.pathname+location.search);}
+window.scrollTo(0,0);
+document.addEventListener('DOMContentLoaded',function(){window.scrollTo(0,0);},{once:true});
+}catch(e){}})();`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: site.title,
@@ -60,6 +78,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`${inter.variable} ${newsreader.variable} ${courierPrime.variable}`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: SCROLL_RESET }} />
+      </head>
       <body>{children}</body>
     </html>
   );
