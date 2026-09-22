@@ -1,14 +1,31 @@
 'use client';
 
-import { internship } from '@/content/site';
+import { internship, type InternshipEntry } from '@/content/site';
 import { revealStyles, useReveal } from '@/lib/motion';
 import { useMotion } from '@/components/MotionProvider';
+
+/** Same left-border block and tag pills as the project cards, so they read as one system. */
+function Entry({ entry, spaced }: { entry: InternshipEntry; spaced: boolean }) {
+  return (
+    <div className="entry" style={{ marginBottom: spaced ? 36 : 0 }}>
+      <h3 className="entry-title">{entry.title}</h3>
+      <p className="entry-body">{entry.description}</p>
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 20 }}>
+        {entry.tags.map((tag) => (
+          <span key={tag} className="tag">
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function InternshipSection() {
   const { reducedMotion } = useMotion();
   const { ref, visible } = useReveal<HTMLElement>(reducedMotion);
   const reveal = revealStyles(visible, reducedMotion);
-  const [first, second] = internship.entries;
+  const [first, ...remaining] = internship.entries;
 
   return (
     <section id="internship" ref={ref} className="section bg-paper">
@@ -23,23 +40,18 @@ export function InternshipSection() {
           </div>
         </div>
 
+        {/* First entry leads; the rest follow on the later reveal, same as before. */}
         {first && (
           <div style={reveal.body}>
-            <div className="entry" style={{ marginBottom: 36 }}>
-              <h3 className="entry-title">{first.title}</h3>
-              <p className="entry-body">{first.description}</p>
-            </div>
+            <Entry entry={first} spaced />
           </div>
         )}
 
-        {second && (
-          <div style={reveal.rest}>
-            <div className="entry">
-              <h3 className="entry-title">{second.title}</h3>
-              <p className="entry-body">{second.description}</p>
-            </div>
-          </div>
-        )}
+        <div style={reveal.rest}>
+          {remaining.map((entry, i) => (
+            <Entry key={entry.title} entry={entry} spaced={i < remaining.length - 1} />
+          ))}
+        </div>
       </div>
     </section>
   );

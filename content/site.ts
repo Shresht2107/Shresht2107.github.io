@@ -72,21 +72,29 @@ export const about = {
 
 /* ------------------------------------------------------------ internship */
 
-export type InternshipEntry = { title: string; description: string };
+export type InternshipEntry = { title: string; description: string; tags: string[] };
 
 export const internship = {
   heading: 'Internship Experience',
-  role: 'Software Engineering Intern — Amnex Infotechnologies',
+  role: 'Intern, Mobility \u00b7 Amnex Infotechnologies \u00b7 June 2026',
   entries: [
     {
-      title: 'AIRA — Enterprise RAG HR Assistant',
+      title: 'AIRA \u00b7 Agentic HR Assistant',
       description:
-        'Built ingestion pipelines and retrieval infrastructure for AIRA, an enterprise RAG-based HR assistant — including pgvector-backed vector storage and LangGraph orchestration for multi-step retrieval and reasoning.',
+        'Built the agent-orchestration loop behind AIRA. Gemma 3 27B reasons over a constrained action schema, choosing to call a tool, answer, ask for clarification, or escalate, across up to four tool round-trips. Answers below a 0.6 confidence threshold go to HR instead of being guessed, and the system falls back to extractive retrieval if the model is unavailable. Also built a sync client covering six APIs of an external HR platform with hierarchical role-based access, and the full Next.js frontend with OTP login and role-aware dashboards.',
+      tags: ['Gemma 3 27B', 'Agent Orchestration', 'Next.js', 'Tailwind CSS'],
     },
     {
-      title: 'Government Data-Analytics Platform',
+      title: 'Retrieval and Document Processing',
       description:
-        'Contributed frontend engineering for a government data-analytics platform, building interfaces to explore and visualize large public datasets.',
+        'Implemented a two-stage retrieve-then-rerank pipeline with a cross-encoder reranker, added title-aware discovery of relevant tables, and used an LLM to reconstruct tables that PDF parsing had broken.',
+      tags: ['RAG', 'Cross-Encoder Reranking', 'PDF Parsing'],
+    },
+    {
+      title: 'Government Data Ingestion',
+      description:
+        'Reverse-engineered a legacy government pollution-data portal and found a predictable URL pattern behind its export feature, turning manual downloads into programmatic collection across any region and timeframe. Containerized the scraper with Docker, with automated CAPTCHA handling and background ingestion.',
+      tags: ['Web Scraping', 'Docker', 'Async Ingestion'],
     },
   ] satisfies InternshipEntry[],
 } as const;
@@ -444,6 +452,7 @@ export const stackTools: readonly StackTool[] = [
   { id: 'cpp', label: 'C++', tier: 'found', shape: 'root', x: 110, y: 330, detail: 'systems work, including the RISC-V assembler.' },
   { id: 'syntax', label: 'C syntax checker', tier: 'artifact', shape: 'artifact', x: 250, y: 190, detail: 'tokeniser and parser for a C syntax checker, written in C.' },
   { id: 'riscv', label: 'RISC-V assembler', tier: 'artifact', shape: 'artifact', x: 250, y: 380, detail: 'two-pass RISC-V assembler emitting machine code.' },
+  { id: 'docker', label: 'Docker', tier: 'prod', shape: 'core', x: 370, y: 135, detail: 'containerized the government ingestion scraper.' },
   { id: 'python', label: 'Python', tier: 'proj', shape: 'node', x: 390, y: 285, detail: 'shared runtime across F1 Prediction, ArogyaLink, AIRA and npm triage.' },
   { id: 'pandas', label: 'Pandas', tier: 'found', shape: 'leaf', x: 480, y: 60, detail: 'data preparation across ML coursework and feature prep.' },
   { id: 'xgboost', label: 'XGBoost', tier: 'proj', shape: 'node', x: 500, y: 155, detail: 'two-stage race outcome model in F1 Prediction.' },
@@ -453,6 +462,7 @@ export const stackTools: readonly StackTool[] = [
   { id: 'qdrant', label: 'Qdrant', tier: 'proj', shape: 'node', x: 700, y: 165, detail: "vector store behind F1 Prediction's RAG Q&A layer." },
   { id: 'pgvector', label: 'pgvector', tier: 'prod', shape: 'core', x: 810, y: 120, detail: "vector storage for AIRA's retrieval layer." },
   { id: 'langgraph', label: 'LangGraph', tier: 'prod', shape: 'core', x: 700, y: 250, detail: 'agent orchestration in AIRA and npm vulnerability triage.' },
+  { id: 'gemma3', label: 'Gemma 3 27B', tier: 'prod', shape: 'core', x: 765, y: 330, detail: 'agent reasoning model behind AIRA.' },
   { id: 'pymupdf', label: 'PyMuPDF', tier: 'prod', shape: 'core', x: 815, y: 215, detail: "document parsing in AIRA's ingestion pipeline." },
   { id: 'ast', label: 'AST analysis', tier: 'proj', shape: 'node', x: 610, y: 305, detail: 'static analysis for npm vulnerability triage.' },
   { id: 'fastapi', label: 'FastAPI', tier: 'proj', shape: 'node', x: 505, y: 355, detail: 'prediction and Q&A serving layer in F1 Prediction.' },
@@ -463,11 +473,11 @@ export const stackTools: readonly StackTool[] = [
   { id: 'node', label: 'Node.js', tier: 'proj', shape: 'node', x: 585, y: 430, detail: 'backend services alongside Express.' },
   { id: 'express', label: 'Express', tier: 'found', shape: 'leaf', x: 670, y: 470, detail: 'REST APIs in coursework services.' },
   { id: 'mongodb', label: 'MongoDB', tier: 'found', shape: 'leaf', x: 765, y: 435, detail: 'document storage behind those Express services.' },
-  { id: 'nextjs', label: 'Next.js', tier: 'prod', shape: 'core', x: 875, y: 320, detail: 'front end for F1 Prediction and the government data platform.' },
-  { id: 'react', label: 'React', tier: 'prod', shape: 'core', x: 935, y: 390, detail: 'government data platform UI.' },
-  { id: 'typescript', label: 'TypeScript', tier: 'prod', shape: 'core', x: 860, y: 425, detail: 'government data platform, end to end.' },
-  { id: 'tailwind', label: 'Tailwind', tier: 'prod', shape: 'core', x: 930, y: 480, detail: 'styling for the government data platform.' },
-  { id: 'zustand', label: 'Zustand', tier: 'prod', shape: 'core', x: 815, y: 495, detail: 'client state in the government data platform.' },
+  { id: 'nextjs', label: 'Next.js', tier: 'prod', shape: 'core', x: 875, y: 320, detail: 'front end for F1 Prediction and the AIRA assistant.' },
+  { id: 'react', label: 'React', tier: 'prod', shape: 'core', x: 935, y: 390, detail: 'UI library beneath the Next.js front ends.' },
+  { id: 'typescript', label: 'TypeScript', tier: 'prod', shape: 'core', x: 860, y: 425, detail: 'typing across the front-end work.' },
+  { id: 'tailwind', label: 'Tailwind', tier: 'prod', shape: 'core', x: 930, y: 480, detail: 'styling for the AIRA front end.' },
+  { id: 'zustand', label: 'Zustand', tier: 'found', shape: 'leaf', x: 815, y: 495, detail: 'client state management.' },
 ] as const;
 
 /** Edge order is load-bearing: opacity keys are assigned by index. */
@@ -501,14 +511,19 @@ export const stackEdges: readonly { from: string; to: string; width: number }[] 
   { from: 'node', to: 'express', width: 1 },
   { from: 'express', to: 'mongodb', width: 1 },
   { from: 'node', to: 'nextjs', width: 1 },
+  { from: 'python', to: 'docker', width: 1 },
+  { from: 'langgraph', to: 'gemma3', width: 1 },
 ] as const;
 
 /** Hovering a project row lights the tools it uses. */
 export const stackProjects: Readonly<Record<string, { label: string; tools: readonly string[] }>> = {
   f1: { label: 'F1 Race Prediction', tools: ['python', 'xgboost', 'sklearn', 'qdrant', 'fastapi', 'nextjs'] },
   arogya: { label: 'ArogyaLink', tools: ['python', 'django', 'asr', 'ocr', 'gemma'] },
-  aira: { label: 'AIRA (internship)', tools: ['langgraph', 'pgvector', 'pymupdf', 'python'] },
-  gov: { label: 'Government data platform', tools: ['nextjs', 'react', 'typescript', 'tailwind', 'zustand'] },
+  aira: {
+    label: 'AIRA \u00b7 Agentic HR Assistant',
+    tools: ['langgraph', 'pgvector', 'pymupdf', 'python', 'gemma3', 'nextjs', 'tailwind'],
+  },
+  gov: { label: 'Government Data Ingestion', tools: ['docker'] },
   npm: { label: 'npm vulnerability triage', tools: ['python', 'langgraph', 'ast'] },
   syntaxChecker: { label: 'C Language Syntax Checker', tools: ['c', 'syntax'] },
   riscvAssembler: { label: 'RISC-V Assembler and Simulator', tools: ['python', 'riscv'] },
@@ -516,9 +531,9 @@ export const stackProjects: Readonly<Record<string, { label: string; tools: read
 
 /** The narrow-viewport fallback for the constellation. */
 export const stackGroups: readonly { label: string; toolIds: readonly string[] }[] = [
-  { label: '// production', toolIds: ['pgvector', 'langgraph', 'pymupdf', 'nextjs', 'react', 'typescript', 'tailwind', 'zustand'] },
+  { label: '// production', toolIds: ['pgvector', 'langgraph', 'gemma3', 'pymupdf', 'docker', 'nextjs', 'react', 'typescript', 'tailwind'] },
   { label: '// project', toolIds: ['python', 'xgboost', 'sklearn', 'qdrant', 'ast', 'fastapi', 'django', 'asr', 'ocr', 'gemma', 'node'] },
-  { label: '// foundational', toolIds: ['c', 'cpp', 'pandas', 'tensorflow', 'keras', 'express', 'mongodb'] },
+  { label: '// foundational', toolIds: ['c', 'cpp', 'pandas', 'tensorflow', 'keras', 'express', 'mongodb', 'zustand'] },
   { label: '// built from scratch', toolIds: ['syntax', 'riscv'] },
 ] as const;
 
