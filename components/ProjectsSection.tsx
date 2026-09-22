@@ -128,7 +128,8 @@ export function ProjectsSection() {
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {otherProjects.items.map((item, i) => (
                 <div
-                  key={`${item.name}-${i}`}
+                  key={item.id}
+                  data-project={item.id}
                   style={{
                     padding: '16px 0',
                     borderTop: '1px solid var(--color-rule)',
@@ -140,6 +141,22 @@ export function ProjectsSection() {
                 >
                   <span style={{ fontWeight: 600, marginRight: 8 }}>{item.name}</span>
                   <span style={{ color: 'var(--color-muted)' }}>{item.description}</span>
+                  <div
+                    style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 10 }}
+                  >
+                    <span className="tag">{item.tag}</span>
+                    {/* No link until repoUrl is filled in. */}
+                    {item.repoUrl !== 'TODO' && (
+                      <a
+                        className="mono-action"
+                        href={item.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        repo &#8599;
+                      </a>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

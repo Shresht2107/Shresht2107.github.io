@@ -382,18 +382,33 @@ export const projects: readonly Project[] = [
 
 export const projectsHeading = 'Projects';
 
-export type OtherProject = { name: string; description: string };
+export type OtherProject = {
+  /** Also the constellation project id, so hovering a row lights its tools. */
+  id: string;
+  name: string;
+  description: string;
+  tag: string;
+  /** Set to a URL to render a repo link; 'TODO' renders none. */
+  repoUrl: string;
+};
 
-/**
- * Placeholder rows, carried over from the design export as-is. Replace the
- * name/description pairs with real entries; the markup needs no changes.
- */
 export const otherProjects = {
   heading: "Other things I've built",
   items: [
-    { name: 'Project name', description: "One-line description of what it does and the stack it's built on." },
-    { name: 'Project name', description: "One-line description of what it does and the stack it's built on." },
-    { name: 'Project name', description: "One-line description of what it does and the stack it's built on." },
+    {
+      id: 'syntaxChecker',
+      name: 'C Language Syntax Checker',
+      description: 'A syntax checker for C source code, written in C from scratch.',
+      tag: 'C',
+      repoUrl: 'TODO',
+    },
+    {
+      id: 'riscvAssembler',
+      name: 'RISC-V Assembler and Simulator',
+      description: 'Translates RISC-V assembly into machine code and simulates its execution.',
+      tag: 'Python',
+      repoUrl: 'TODO',
+    },
   ] satisfies OtherProject[],
 } as const;
 
@@ -492,7 +507,8 @@ export const stackProjects: Readonly<Record<string, { label: string; tools: read
   aira: { label: 'AIRA (internship)', tools: ['langgraph', 'pgvector', 'pymupdf', 'python'] },
   gov: { label: 'Government data platform', tools: ['nextjs', 'react', 'typescript', 'tailwind', 'zustand'] },
   npm: { label: 'npm vulnerability triage', tools: ['python', 'langgraph', 'ast'] },
-  systems: { label: 'Systems work', tools: ['c', 'cpp', 'syntax', 'riscv'] },
+  syntaxChecker: { label: 'C Language Syntax Checker', tools: ['c', 'syntax'] },
+  riscvAssembler: { label: 'RISC-V Assembler and Simulator', tools: ['python', 'riscv'] },
 } as const;
 
 /** The narrow-viewport fallback for the constellation. */
