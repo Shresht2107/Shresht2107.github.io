@@ -40,12 +40,12 @@ export const sectionKeys: readonly SectionKey[] = [
 ] as const;
 
 export const navItems: readonly { key: SectionKey; label: string }[] = [
-  { key: 'about', label: 'about' },
-  { key: 'internship', label: 'experience' },
-  { key: 'projects', label: 'projects' },
-  { key: 'stack', label: 'stack' },
-  { key: 'now', label: 'now' },
-  { key: 'contact', label: 'contact' },
+  { key: 'about', label: 'About' },
+  { key: 'internship', label: 'Experience' },
+  { key: 'projects', label: 'Projects' },
+  { key: 'stack', label: 'Stack' },
+  { key: 'now', label: 'Now' },
+  { key: 'contact', label: 'Contact' },
 ] as const;
 
 /* ------------------------------------------------------------------ hero */
