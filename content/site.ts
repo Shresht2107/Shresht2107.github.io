@@ -52,7 +52,7 @@ export const navItems: readonly { key: SectionKey; label: string }[] = [
 
 export const hero = {
   /** Typed character by character once the intro hands over. */
-  typedText: "Hi, I'm Shresht Ashish. Welcome to my portfolio.",
+  typedText: "Hi, I'm Shresht Ashish. Get to know me more.",
   subline:
     'CS student at Nirma University. I build retrieval pipelines and agent systems, and spend most of my time turning them into working products.',
   scrollCue: 'scroll',
