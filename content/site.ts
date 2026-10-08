@@ -555,7 +555,6 @@ export const now = {
   items: [
     'Building a triage tool that scores and prioritizes npm dependency vulnerabilities.',
     'Researching agentic control patterns for federated learning systems.',
-    'Preparing for Smart India Hackathon 2026.',
   ],
 } as const;
 
