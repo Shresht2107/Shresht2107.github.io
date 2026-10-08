@@ -567,7 +567,6 @@ export const contact = {
   linkLabels: {
     github: 'GitHub ↗',
     linkedin: 'LinkedIn ↗',
-    email: 'Email ↗',
   },
   footerLeft: 'Shresht Ashish © 2026',
   footerRight: 'Nirma University · CS',

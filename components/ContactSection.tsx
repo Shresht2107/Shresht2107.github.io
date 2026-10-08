@@ -81,7 +81,16 @@ export function ContactSection() {
           >
             <ContactLink href={links.github} label={contact.linkLabels.github} />
             <ContactLink href={links.linkedin} label={contact.linkLabels.linkedin} />
-            <ContactLink href={`mailto:${links.email}`} label={contact.linkLabels.email} />
+            <span
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontWeight: 600,
+                fontSize: 18,
+                color: 'var(--color-ink)',
+              }}
+            >
+              Email : {links.email}
+            </span>
           </div>
         </div>
 
